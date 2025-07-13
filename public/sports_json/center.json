@@ -1,0 +1,39 @@
+{
+	"name": "Ceinture Abdominale",
+	"duration_minutes": 20,
+	"frequency_per_week": 2,
+	"type": "Circuit",
+	"rounds": 3,
+	"exercises": [
+		{
+			"name": "Crunchs lents",
+			"repetitions": 20,
+			"rest_seconds": 15,
+			"alternative": "Identique"
+		},
+		{
+			"name": "Gainage avant",
+			"duration_seconds": 30,
+			"rest_seconds": 15,
+			"alternative": "Identique"
+		},
+		{
+			"name": "Russian twists",
+			"repetitions": 20,
+			"rest_seconds": 15,
+			"alternative": "Sans poids, mains jointes"
+		},
+		{
+			"name": "Relevés de jambes",
+			"repetitions": 15,
+			"rest_seconds": 15,
+			"alternative": "Identique"
+		},
+		{
+			"name": "Gainage latéral",
+			"duration_seconds": 30,
+			"rest_seconds": 15,
+			"alternative": "Identique"
+		}
+	]
+}

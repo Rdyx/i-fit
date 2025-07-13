@@ -1,0 +1,50 @@
+{
+	"name": "Haut du Corps",
+	"duration_minutes": 45,
+	"frequency_per_week": 2,
+	"warmup": ["Rotations d’épaules", "Cercles de bras", "Pompes lentes genoux"],
+	"exercises": [
+		{
+			"name": "Pompes classiques",
+			"series": 4,
+			"repetitions": "10-15",
+			"rest_seconds": 45,
+			"alternative": "Pompes déclinées ou diamant"
+		},
+		{
+			"name": "Rowing haltères",
+			"series": 4,
+			"repetitions": "10-12",
+			"rest_seconds": 45,
+			"alternative": "Rowing au sol (superman) ou tirage élastique"
+		},
+		{
+			"name": "Développé militaire haltères",
+			"series": 3,
+			"repetitions": "10-12",
+			"rest_seconds": 45,
+			"alternative": "Pike push-up (pompes en V)"
+		},
+		{
+			"name": "Élévations latérales haltères",
+			"series": 3,
+			"repetitions": "12-15",
+			"rest_seconds": 30,
+			"alternative": "Cercles bras tendus (sans poids)"
+		},
+		{
+			"name": "Curl biceps haltères",
+			"series": 3,
+			"repetitions": "10-12",
+			"rest_seconds": 30,
+			"alternative": "Curl isométrique sans haltère (15 sec de maintien)"
+		},
+		{
+			"name": "Extensions triceps haltère",
+			"series": 3,
+			"repetitions": "10-12",
+			"rest_seconds": 30,
+			"alternative": "Dips sur chaise ou banc"
+		}
+	]
+}

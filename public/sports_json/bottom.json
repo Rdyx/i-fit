@@ -1,0 +1,43 @@
+{
+	"name": "Bas du Corps",
+	"duration_minutes": 45,
+	"frequency_per_week": 2,
+	"warmup": ["Squats à vide", "Fentes dynamiques", "Mobilité des hanches"],
+	"exercises": [
+		{
+			"name": "Goblet squats haltère",
+			"series": 4,
+			"repetitions": "12-15",
+			"rest_seconds": 45,
+			"alternative": "Squats sautés"
+		},
+		{
+			"name": "Fentes marchées haltères",
+			"series": 3,
+			"repetitions": "12 par jambe",
+			"rest_seconds": 45,
+			"alternative": "Fentes sautées"
+		},
+		{
+			"name": "Hip thrust au sol",
+			"series": 3,
+			"repetitions": "15-20",
+			"rest_seconds": 30,
+			"alternative": "Identique"
+		},
+		{
+			"name": "Sumo squats haltère",
+			"series": 3,
+			"repetitions": "12-15",
+			"rest_seconds": 30,
+			"alternative": "Sumo squats sans poids, tempo lent"
+		},
+		{
+			"name": "Mollets debout haltères",
+			"series": 3,
+			"repetitions": 20,
+			"rest_seconds": 30,
+			"alternative": "Mollets sans poids sur un step"
+		}
+	]
+}
