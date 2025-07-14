@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Stopwatch from "./Stopwatch";
+import Image from "next/image";
 
 /**
  * WorkoutStep component displays a single exercise step with details and controls.
@@ -18,6 +19,7 @@ import Stopwatch from "./Stopwatch";
  * @param {string} [props.youtubeLink] - YouTube search link
  * @param {string} [props.googleLink] - Google search link
  * @param {boolean} [props.isWarmup] - Is this the warmup step
+ * @param {function} [props.onNextStep] - Callback to advance to the next workout step when series reaches 0
  * @returns {JSX.Element}
  * @author GitHub Copilot
  */
@@ -36,6 +38,8 @@ const WorkoutStep = ({
 	youtubeLink,
 	googleLink,
 	isWarmup,
+	// New prop for next step callback
+	onNextStep,
 }: {
 	name: string;
 	description?: string;
@@ -51,11 +55,12 @@ const WorkoutStep = ({
 	youtubeLink?: string;
 	googleLink?: string;
 	isWarmup?: boolean;
+	onNextStep?: () => void;
 }) => {
 	// Reset series/rounds and timers when step changes
-	const [currentSeries, setCurrentSeries] = useState(Number(series ?? rounds) || 1);
+	const [currentSeries, setCurrentSeries] = useState(Math.max(Number(series ?? rounds), 0));
 	useEffect(() => {
-		setCurrentSeries(Number(series ?? rounds) || 1);
+		setCurrentSeries(Math.max(Number(series ?? rounds), 0));
 	}, [name, series, rounds]);
 
 	// Always show repetitions if available
@@ -65,7 +70,7 @@ const WorkoutStep = ({
 	const stepKey = `${name}-${series ?? rounds}-${repetitions ?? ""}`;
 
 	const handleRestEnd = () => {
-		if (currentSeries > 1) setCurrentSeries((s) => s - 1);
+		if (currentSeries > 0) setCurrentSeries((s) => Math.max(s - 1, 0));
 	};
 
 	return (
@@ -74,12 +79,12 @@ const WorkoutStep = ({
 			aria-label={`Exercice: ${name}`}
 		>
 			{image && (
-				<img
+				<Image
 					src={image}
-					alt={`Illustration de l'exercice ${name}`}
-					className="w-24 h-24 object-contain rounded"
+					alt={`Illustration de l&apos;exercice ${name}`}
 					loading="lazy"
-					aria-label={`Image de l'exercice ${name}`}
+					aria-label={`Image de l&apos;exercice ${name}`}
+					className="w-24 h-24 object-contain rounded"
 				/>
 			)}
 			<div className="flex-1 flex flex-col items-center justify-center">
@@ -119,21 +124,35 @@ const WorkoutStep = ({
 						</span>
 					)}
 				</div>
-				{typeof durationSeconds === "number" && durationSeconds > 0 && (
-					<div className="mt-2 w-full flex flex-col items-center">
-						<div className="font-semibold text-blue-700 dark:text-blue-300 mb-1 text-center">
-							{restLabel || "Durée"}
-						</div>
-						<Stopwatch key={stepKey + "-main"} duration={durationSeconds} />
-					</div>
-				)}
-				{typeof restSeconds === "number" && restSeconds > 0 && (
-					<div className="mt-2 w-full flex flex-col items-center">
-						<div className="font-semibold text-blue-700 dark:text-blue-300 mb-1 text-center">
-							{restLabel || "Repos"}
-						</div>
-						<Stopwatch key={stepKey + "-rest"} duration={restSeconds} onComplete={handleRestEnd} />
-					</div>
+				{/* Conditional rendering for stopwatches and next step button */}
+				{currentSeries > 0 ? (
+					<>
+						{typeof durationSeconds === "number" && durationSeconds > 0 && (
+							<div className="mt-2 w-full flex flex-col items-center">
+								<div className="font-semibold text-blue-700 dark:text-blue-300 mb-1 text-center">
+									{restLabel || "Durée"}
+								</div>
+								<Stopwatch key={stepKey + "-main"} duration={durationSeconds} />
+							</div>
+						)}
+						{typeof restSeconds === "number" && restSeconds > 0 && (
+							<div className="mt-2 w-full flex flex-col items-center">
+								<div className="font-semibold text-blue-700 dark:text-blue-300 mb-1 text-center">
+									{restLabel || "Repos"}
+								</div>
+								<Stopwatch key={stepKey + "-rest"} duration={restSeconds} onComplete={handleRestEnd} />
+							</div>
+						)}
+					</>
+				) : (
+					<button
+						type="button"
+						className="mt-4 px-4 py-2 bg-green-600 text-white rounded shadow focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 dark:bg-green-700 dark:text-white"
+						aria-label="Passer à l'étape suivante"
+						onClick={onNextStep}
+					>
+						Étape suivante
+					</button>
 				)}
 				<div className="flex gap-2 mt-2 justify-center w-full">
 					{!isWarmup && youtubeLink && (
@@ -142,7 +161,7 @@ const WorkoutStep = ({
 							target="_blank"
 							rel="noopener noreferrer"
 							className="inline-flex items-center px-3 py-1 text-sm font-medium bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-200 rounded hover:underline"
-							aria-label={`Voir ${name} sur YouTube`}
+							aria-label={`Voir ${name.replace(/'/g, "&apos;")} sur YouTube`}
 						>
 							YouTube
 						</a>
@@ -153,7 +172,7 @@ const WorkoutStep = ({
 							target="_blank"
 							rel="noopener noreferrer"
 							className="inline-flex items-center px-3 py-1 text-sm font-medium bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 rounded hover:underline"
-							aria-label={`Rechercher ${name} sur Google`}
+							aria-label={`Rechercher ${name.replace(/'/g, "&apos;")} sur Google`}
 						>
 							Google
 						</a>

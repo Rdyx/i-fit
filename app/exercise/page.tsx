@@ -1,19 +1,14 @@
 "use client";
-import { useEffect, useState, useContext } from "react";
-import { useRouter } from "next/navigation";
-import { DayContext } from "../layout";
-import { getFrenchDaysArray } from "../utils";
+import { useEffect, useState } from "react";
 import Stopwatch from "../components/Stopwatch";
 import WorkoutStep from "../components/WorkoutStep";
+import type { WorkoutData, Exercise } from "../types";
 
 export default function ExercisePage() {
-	const router = useRouter();
-	const [data, setData] = useState<any[]>([]); // Temporarily use any[] for step navigation
-	const [loading, setLoading] = useState(true);
+	const [data, setData] = useState<WorkoutData[]>([]);
+	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const [stepIndex, setStepIndex] = useState(0);
-	const daysFr = getFrenchDaysArray();
-	const { dayIndex } = useContext(DayContext);
+	const [stepIndex, setStepIndex] = useState<number>(0);
 
 	useEffect(() => {
 		try {
@@ -23,40 +18,31 @@ export default function ExercisePage() {
 				setData(JSON.parse(stored));
 				setLoading(false);
 			} else {
-				setError("Aucune donnée d'exercice sélectionnée. Veuillez retourner à l'accueil et choisir un jour.");
+				setError("Aucune donnée d&apos;exercice sélectionnée. Veuillez retourner à l&apos;accueil et choisir un jour.");
 				setLoading(false);
 			}
 		} catch (e) {
-			setError("Impossible de charger les données d'exercice.");
+			setError("Impossible de charger les données d&apos;exercice.");
 			setLoading(false);
+			console.error("Error loading exercise data:", e);
 		}
 	}, []);
 
 	if (loading) return <div className="p-8">Chargement…</div>;
 	if (error) return <div className="p-8 text-red-600">Erreur : {error}</div>;
-	if (!data.length) return <div className="p-8 text-gray-600">Aucune donnée d'exercice à afficher.</div>;
+	if (!data.length) return <div className="p-8 text-gray-600">Aucune donnée d&apos;exercice à afficher.</div>;
 
-	// Helper for search links
 	const getSearchLinks = (name: string) => ({
 		youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(name)}`,
 		google: `https://www.google.com/search?q=${encodeURIComponent(name)}`,
 	});
 
-	// Prepare steps: warmup (single step) + exercises
 	const warmupStep = data
-		.flatMap((workout) =>
+		.flatMap((workout: WorkoutData) =>
 			Array.isArray(workout.warmup) ? workout.warmup : typeof workout.warmup === "string" ? [workout.warmup] : []
 		)
 		.filter((ex, idx, arr) => ex && arr.indexOf(ex) === idx)
 		.join(", ");
-
-	const exerciseSteps = data.flatMap((workout) =>
-		Array.isArray(workout.exercises)
-			? workout.exercises
-			: typeof workout.exercises === "string"
-			? [workout.exercises]
-			: []
-	);
 
 	const steps = [
 		warmupStep
@@ -72,12 +58,11 @@ export default function ExercisePage() {
 					alternative: undefined,
 					durationSeconds: undefined,
 					restSeconds: undefined,
-					youtubeLink: undefined, // Hide for warmup
-					googleLink: undefined, // Hide for warmup
+					youtubeLink: undefined,
+					googleLink: undefined,
 			  }
 			: null,
-		// Flatten exercises and attach rounds from parent workout if missing
-		...data.flatMap((workout: any) => {
+		...data.flatMap((workout: WorkoutData) => {
 			const parentRounds = workout.rounds;
 			return (
 				Array.isArray(workout.exercises)
@@ -85,17 +70,17 @@ export default function ExercisePage() {
 					: typeof workout.exercises === "string"
 					? [workout.exercises]
 					: []
-			).map((ex: any) => {
-				const series = ex.series ?? ex.rounds ?? parentRounds;
-				const rounds = ex.rounds ?? parentRounds;
+			).map((ex: Exercise) => {
+				const series = ex.series ?? (ex as Partial<Exercise> & { rounds?: number }).rounds ?? parentRounds;
+				const rounds = (ex as Partial<Exercise> & { rounds?: number }).rounds ?? parentRounds;
 				const repetitions = ex.repetitions ?? undefined;
-				const durationSeconds = ex.duration_seconds ?? undefined;
+				const durationSeconds = (ex as Partial<Exercise> & { duration_seconds?: number }).duration_seconds ?? undefined;
 				const restSeconds = ex.rest_seconds ?? undefined;
 				return {
 					name: ex.name ?? ex,
-					description: ex.description,
-					duration: ex.duration,
-					image: ex.image,
+					description: (ex as Partial<Exercise> & { description?: string }).description,
+					duration: (ex as Partial<Exercise> & { duration?: number }).duration,
+					image: (ex as Partial<Exercise> & { image?: string }).image,
 					series,
 					rounds,
 					repetitions,
@@ -112,18 +97,8 @@ export default function ExercisePage() {
 
 	const currentStep = steps[stepIndex];
 
-	// Intercept homepage navigation from menu
-	const handleMenuHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-		e.preventDefault();
-		if (window.confirm("Êtes-vous sûr de vouloir quitter la séance en cours et revenir à l'accueil ?")) {
-			router.push("/");
-		}
-	};
-
 	return (
 		<div className="flex flex-col items-center gap-8 my-8">
-			{/* Example: If you have a menu/navbar, update the homepage link like this: */}
-			{/* <a href="/" onClick={handleMenuHomeClick}>Accueil</a> */}
 			<div className="flex flex-col items-center w-full max-w-xl gap-4">
 				<div className="flex items-center justify-center w-full gap-4 mb-2">
 					<button
@@ -183,6 +158,7 @@ export default function ExercisePage() {
 							youtubeLink={currentStep.youtubeLink}
 							googleLink={currentStep.googleLink}
 							isWarmup={currentStep.isWarmup}
+							onNextStep={() => setStepIndex((i) => Math.min(i + 1, steps.length - 1))}
 						/>
 					</div>
 				)}
