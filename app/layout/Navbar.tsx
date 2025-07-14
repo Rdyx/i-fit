@@ -1,13 +1,16 @@
 "use client";
 import Link from "next/link";
 import { useContext } from "react";
-import { DayContext } from "./layout";
-import { getFrenchDaysArray } from "./utils";
+import { DayContext } from "../layout";
+import { getFrenchDaysArray } from "../utils";
+import { usePathname } from "next/navigation";
 
 const daysFr = getFrenchDaysArray();
 
 export default function Navbar() {
 	const { dayIndex, setDayIndex } = useContext(DayContext);
+	const pathname = usePathname();
+	const isExercisePage = pathname.startsWith("/exercise");
 
 	const handlePrev = () => {
 		setDayIndex((dayIndex + 6) % 7);
@@ -32,25 +35,33 @@ export default function Navbar() {
 					i-fit
 				</Link>
 				<div className="flex items-center gap-2">
-					<button
-						type="button"
-						onClick={handlePrev}
-						className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-						aria-label="Jour précédent"
-					>
-						&#x25C0;
-					</button>
-					<span className="font-mono text-base min-w-[90px] text-center select-none" aria-live="polite">
-						{daysFr[dayIndex]}
-					</span>
-					<button
-						type="button"
-						onClick={handleNext}
-						className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-						aria-label="Jour suivant"
-					>
-						&#x25B6;
-					</button>
+					{!isExercisePage ? (
+						<>
+							<button
+								type="button"
+								onClick={handlePrev}
+								className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+								aria-label="Jour précédent"
+							>
+								&#x25C0;
+							</button>
+							<span className="font-mono text-base min-w-[90px] text-center select-none" aria-live="polite">
+								{daysFr[dayIndex]}
+							</span>
+							<button
+								type="button"
+								onClick={handleNext}
+								className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+								aria-label="Jour suivant"
+							>
+								&#x25B6;
+							</button>
+						</>
+					) : (
+						<span className="font-mono text-base min-w-[90px] text-center select-none" aria-live="polite">
+							{daysFr[dayIndex]}
+						</span>
+					)}
 				</div>
 				<button
 					type="button"

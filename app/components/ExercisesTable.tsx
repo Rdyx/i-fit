@@ -1,5 +1,5 @@
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowClassNameParams } from "@mui/x-data-grid";
-import type { Exercise } from "./types";
+import type { Exercise } from "../types";
 import * as React from "react";
 
 // Add a type for exercises with workoutName
@@ -136,7 +136,7 @@ export default function ExercisesTable({ exercises }: ExercisesTableProps) {
 								fill="#34A853"
 							/>
 							<path
-								d="M43.6 20.5H42V20H24v8h11.3c-1.2 3.2-4.7 7-11.3 7-6.1 0-11-4.9-11-11s4.9-11 11-11c2.6 0 5 .9 6.9 2.4l6.6-6.6C34.5 5.5 29.6 3.5 24 3.5c-7.2 0-13.4 4.1-16.7 10.6z"
+								d="M43.6 20.5H42V20H24v8h11.3c-1.2 3.2-4.7 7-11.3 7-6.1 0-11-4.9-11-11s4.9-11 11-11c2.6 0 5 .9 6.9 2.4l6.6-6.6C34.5 5.5 29.6 3.5 24 3.5c-7.2 0-13.4 4.1-16.7 10.6l6.6 4.8C14.5 16.1 18.9 13 24 13c2.6 0 5 .9 6.9 2.4l6.6-6.6C34.5 5.5 29.6 3.5 24 3.5c-7.2 0-13.4 4.1-16.7 10.6z"
 								fill="#4285F4"
 							/>
 						</svg>
