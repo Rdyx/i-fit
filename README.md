@@ -1,5 +1,12 @@
 Découverte du "vibe-coding"... Expérience pour voir le fonctionnement avec Github Copilot et comment le combiner avec mes compétences actuelles pour développer des PoCs/MvP rapidement.
 
+Après quelques heures (~6h), 99% de l'appli a été faite seulement avec des prompts sur copilot (pro, ayant atteins la limite de 50 échanges avec copilot). La qualité est moyenne mais la vitesse de dévelopement est définitevement présente. Subsistes quelques inconvénients du genre il faut vraiment babysitter de A-Z pour s'assurer que les imports, unused-vars et ce genre de chose soient fixed (et parfois revenir dessus plusieurs fois).
+
+Néanmoins la capacité de développer des pocs/mvp est clairement là. La possibilité de build des applis à 100% en ne se basant QUE sur copilot en revanche me paraît encore difficilement possible.
+
+La partie build/deploy a été faite à la main.
+Les models JSON ont été build avec ChatGPT et très légèrement adaptés à la main pour avoir quelque chose d'un peu plus constant overall
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

@@ -1,5 +1,5 @@
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowClassNameParams } from "@mui/x-data-grid";
-import { ExercisesTableProps, ExerciseWithWorkout, ExerciseWithWorkoutAndRounds } from "../types";
+import { ExercisesTableProps, ExerciseWithWorkout, ExerciseWithWorkoutAndRounds } from "../utils/types";
 import * as React from "react";
 import { buildExerciseRows, handleColumnVisibilityModelChange, getExerciseRowId } from "../utils";
 

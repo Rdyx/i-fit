@@ -1,5 +1,5 @@
 // Utility functions for the i-fit app
-import { ExerciseWithWorkoutAndRounds } from "../types";
+import { ExerciseWithWorkoutAndRounds } from "./types";
 
 /**
  * Returns the French day name for a given day index (0=Dimanche, 1=Lundi, ... 6=Samedi)
