@@ -156,6 +156,7 @@
     - Private class fields and methods
     - Export * as namespace syntax
     - Array methods (`map`, `filter`, `reduce`, `flatMap`, etc.)
+    - Use <Link /> rather than <a /> for internal navigation in React applications
     - **Avoid**:
     - `var` keyword (use `const` and `let`)
     - jQuery or any external libraries

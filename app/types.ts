@@ -16,3 +16,12 @@ export interface WorkoutData {
 	warmup: string[];
 	exercises: Exercise[];
 }
+
+export interface ExercisesTableProps {
+	exercises: ExerciseWithWorkoutAndRounds[];
+}
+
+export type ExerciseWithWorkout = Exercise & { workoutName: string };
+export interface ExerciseWithWorkoutAndRounds extends ExerciseWithWorkout {
+	workoutRounds?: number;
+}

@@ -29,7 +29,7 @@ export default function WorkoutDisplay({ workouts, selectedDay }: WorkoutDisplay
 					<h2 className="text-lg font-semibold mb-2">Échauffement</h2>
 					<ul className="list-disc list-inside mb-4">
 						{warmups.map((item, idx) => (
-							<li key={idx}>{item}</li>
+							<li key={typeof item === "string" ? item + "-" + idx : idx}>{item}</li>
 						))}
 					</ul>
 				</>

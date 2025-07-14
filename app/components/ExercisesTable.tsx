@@ -1,18 +1,13 @@
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowClassNameParams } from "@mui/x-data-grid";
-import type { Exercise } from "../types";
+import {
+	Exercise,
+	WorkoutData,
+	ExercisesTableProps,
+	ExerciseWithWorkout,
+	ExerciseWithWorkoutAndRounds,
+} from "../types";
 import * as React from "react";
-
-// Add a type for exercises with workoutName
-type ExerciseWithWorkout = Exercise & { workoutName: string };
-
-// Accept an optional prop for workoutRounds, or expect it on each exercise
-interface ExerciseWithWorkoutAndRounds extends ExerciseWithWorkout {
-	workoutRounds?: number;
-}
-
-interface ExercisesTableProps {
-	exercises: ExerciseWithWorkoutAndRounds[];
-}
+import { buildExerciseRows, handleColumnVisibilityModelChange, getExerciseRowId } from "../utils";
 
 /**
  * Renders a MUI DataGrid for a list of exercises, including external links and the main workout name.
@@ -152,25 +147,24 @@ export default function ExercisesTable({ exercises }: ExercisesTableProps) {
 		alternative: false,
 	});
 
-	const handleColumnVisibilityModelChange = (model: { [key: string]: boolean }) => {
-		setColumnVisibilityModel(model);
-	};
+	const handleColumnVisibilityModel = handleColumnVisibilityModelChange(setColumnVisibilityModel);
 
 	// When building the rows, inject workoutRounds from the parent workout if not present
-	const rows = exercises.map((ex, idx) => ({ id: idx, ...ex }));
+	const rows: ExerciseWithWorkoutAndRounds[] = buildExerciseRows(exercises);
 
 	return (
 		<div style={{ width: "100%", background: "var(--mui-palette-background-paper)" }}>
 			<DataGrid
 				rows={rows}
 				columns={columns}
+				getRowId={getExerciseRowId}
 				initialState={{
-					pagination: { paginationModel: { pageSize: Math.max(5, Math.min(20, rows.length)) } },
+					pagination: { paginationModel: { pageSize: 20 } },
 				}}
-				pageSizeOptions={[5, 10, 20, 50]}
+				pageSizeOptions={[5, 10, 20, 50, 100]}
 				disableRowSelectionOnClick
 				columnVisibilityModel={columnVisibilityModel}
-				onColumnVisibilityModelChange={handleColumnVisibilityModelChange}
+				onColumnVisibilityModelChange={handleColumnVisibilityModel}
 				getRowClassName={(params: GridRowClassNameParams<ExerciseWithWorkout>) =>
 					params.indexRelativeToCurrentPage % 2 === 0 ? "MuiDataGrid-row even-row" : "MuiDataGrid-row odd-row"
 				}

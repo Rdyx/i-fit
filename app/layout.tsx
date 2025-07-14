@@ -32,10 +32,10 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 				<DayContext.Provider value={{ dayIndex, setDayIndex }}>
-					<div className="sticky-navbar">
+					<div key="navbar" className="sticky-navbar">
 						<Navbar />
 					</div>
-					{children}
+					<div key="children">{children}</div>
 				</DayContext.Provider>
 			</body>
 		</html>

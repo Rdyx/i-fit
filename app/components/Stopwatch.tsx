@@ -4,16 +4,22 @@ import PropTypes from "prop-types";
 
 interface StopwatchProps {
 	duration: number; // duration in seconds
+	onComplete?: () => void; // optional callback when countdown reaches zero
 }
 
 /**
- * Stopwatch component with start, pause, and reset controls.
+ * Stopwatch component with start, pause, reset controls, and onComplete callback.
  * @param duration Duration in seconds
+ * @param onComplete Optional callback when countdown reaches zero
  */
-export default function Stopwatch({ duration }: StopwatchProps) {
+export default function Stopwatch({ duration, onComplete }: StopwatchProps) {
 	const [seconds, setSeconds] = useState(duration);
 	const [running, setRunning] = useState(false);
 	const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+	useEffect(() => {
+		setSeconds(duration);
+	}, [duration]);
 
 	useEffect(() => {
 		if (running && seconds > 0) {
@@ -30,6 +36,13 @@ export default function Stopwatch({ duration }: StopwatchProps) {
 			}
 		};
 	}, [running, seconds]);
+
+	useEffect(() => {
+		if (seconds === 0 && running) {
+			setRunning(false);
+			if (onComplete) onComplete();
+		}
+	}, [seconds, running, onComplete]);
 
 	const handleStart = () => setRunning(true);
 	const handlePause = () => setRunning(false);
