@@ -80,7 +80,7 @@ const WorkoutStep = ({
 		>
 			{image && (
 				<Image
-					src={image}
+					src={`/nextjs-github-pages/${image}`}
 					alt={`Illustration de l&apos;exercice ${name}`}
 					loading="lazy"
 					aria-label={`Image de l&apos;exercice ${name}`}

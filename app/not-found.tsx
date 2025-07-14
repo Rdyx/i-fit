@@ -10,7 +10,7 @@ export default function NotFoundPage() {
 				role="main"
 				aria-label="Not found page main content"
 			>
-				<Image className="dark:invert" src="/globe.svg" alt="Not found icon" width={64} height={64} priority />
+				<Image className="dark:invert" src="/nextjs-github-pages/globe.svg" alt="Not found icon" width={64} height={64} priority />
 				<h1 className="text-3xl font-bold text-center sm:text-left" tabIndex={-1}>
 					404 – Page Not Found
 				</h1>

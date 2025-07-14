@@ -11,7 +11,7 @@ export default function ErrorPage() {
 				role="main"
 				aria-label="Error page main content"
 			>
-				<Image className="dark:invert" src="/file.svg" alt="Error icon" width={64} height={64} priority />
+				<Image className="dark:invert" src="/nextjs-github-pages/file.svg" alt="Error icon" width={64} height={64} priority />
 				<h1 className="text-3xl font-bold text-center sm:text-left" tabIndex={-1}>
 					Oopsie, error!
 				</h1>
