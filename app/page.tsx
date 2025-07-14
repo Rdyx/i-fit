@@ -19,7 +19,7 @@ export default function Home() {
 		const files: string[] = [
 			`${BASE_URL}/sports_json/top.json`,
 			`${BASE_URL}/sports_json/bottom.json`,
-			`${BASE_URL}/sports_json/center.json`
+			`${BASE_URL}/sports_json/center.json`,
 		];
 		Promise.all(
 			files.map((file) =>
