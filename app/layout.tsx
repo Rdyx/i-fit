@@ -14,19 +14,12 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
-export const DayContext = createContext<{
-	dayIndex: number;
-	setDayIndex: (idx: number) => void;
-}>({
+export const DayContext = createContext<{ dayIndex: number; setDayIndex: (idx: number) => void }>({
 	dayIndex: new Date().getDay(),
 	setDayIndex: () => {},
 });
 
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 	const [dayIndex, setDayIndex] = useState<number>(new Date().getDay());
 	return (
 		<html lang="en">

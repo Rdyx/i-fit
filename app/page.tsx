@@ -4,29 +4,28 @@ import WorkoutDisplay from "./components/WorkoutDisplay";
 import type { WorkoutData } from "./types";
 import { DayContext } from "./layout";
 import { getFrenchDaysArray } from "./utils";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
 	const [data, setData] = useState<WorkoutData[]>([]);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const daysFr = getFrenchDaysArray();
+	const daysFr: string[] = getFrenchDaysArray();
 	const { dayIndex } = useContext(DayContext);
 	const router = useRouter();
 
 	useEffect(() => {
-		const files = ["/sports_json/top.json", "/sports_json/bottom.json", "/sports_json/center.json"];
+		const files: string[] = ["/sports_json/top.json", "/sports_json/bottom.json", "/sports_json/center.json"];
 		Promise.all(
 			files.map((file) =>
-				fetch(file).then((res) => {
+				fetch(file).then((res: Response) => {
 					if (!res.ok) throw new Error(`Failed to load ${file}`);
 					return res.json();
 				})
 			)
 		)
-			.then((jsons) => setData(jsons))
-			.catch((err) => setError(err.message))
+			.then((jsons: WorkoutData[]) => setData(jsons))
+			.catch((err: Error) => setError(err.message))
 			.finally(() => setLoading(false));
 	}, []);
 
@@ -34,17 +33,16 @@ export default function Home() {
 	if (error) return <div className="p-8 text-red-600">Erreur : {error}</div>;
 	if (!data.length) return null;
 
-	const selectedDay = daysFr[dayIndex];
-	const hasWorkoutForDay = data.some((workout) => {
-		const whenList = workout.when.split(/,\s*/).map((d) => d.trim().toLowerCase());
+	const selectedDay: string = daysFr[dayIndex];
+	const hasWorkoutForDay: boolean = data.some((workout: WorkoutData) => {
+		const whenList: string[] = workout.when.split(/,\s*/).map((d: string) => d.trim().toLowerCase());
 		return whenList.includes(selectedDay.toLowerCase());
 	});
 
-	const handlePlay = () => {
+	const handlePlay = (): void => {
 		try {
-			// Filter only full workout objects for the selected day
-			const filtered = data.filter((workout) => {
-				const whenList = workout.when.split(/,\s*/).map((d) => d.trim().toLowerCase());
+			const filtered: WorkoutData[] = data.filter((workout: WorkoutData) => {
+				const whenList: string[] = workout.when.split(/,\s*/).map((d: string) => d.trim().toLowerCase());
 				return whenList.includes(selectedDay.toLowerCase());
 			});
 			localStorage.setItem("exerciseData", JSON.stringify(filtered));
@@ -67,7 +65,7 @@ export default function Home() {
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="mr-2">
 							<polygon points="5,3 19,12 5,21" />
 						</svg>
-						Commencer l'entraînement
+						Commencer l&apos;entraînement
 					</button>
 				</div>
 			)}

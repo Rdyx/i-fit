@@ -117,7 +117,9 @@ export default function Navbar() {
 										if (isExercisePage) {
 											e.preventDefault();
 											if (
-												window.confirm("Êtes-vous sûr de vouloir quitter la séance en cours et revenir à l'accueil ?")
+												window.confirm(
+													"Êtes-vous sûr de vouloir quitter la séance en cours et revenir à l&apos;accueil ?"
+												)
 											) {
 												router.push("/");
 											}

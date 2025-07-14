@@ -1,6 +1,5 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
 
 interface StopwatchProps {
 	duration: number; // duration in seconds

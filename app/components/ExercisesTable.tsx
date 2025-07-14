@@ -1,11 +1,5 @@
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowClassNameParams } from "@mui/x-data-grid";
-import {
-	Exercise,
-	WorkoutData,
-	ExercisesTableProps,
-	ExerciseWithWorkout,
-	ExerciseWithWorkoutAndRounds,
-} from "../types";
+import { ExercisesTableProps, ExerciseWithWorkout, ExerciseWithWorkoutAndRounds } from "../types";
 import * as React from "react";
 import { buildExerciseRows, handleColumnVisibilityModelChange, getExerciseRowId } from "../utils";
 
@@ -54,16 +48,8 @@ export default function ExercisesTable({ exercises }: ExercisesTableProps) {
 			minWidth: 120,
 			align: "right",
 			headerAlign: "right",
-			renderCell: (params: GridRenderCellParams<ExerciseWithWorkout & { duration_seconds?: number }>) => {
+			renderCell: (params: GridRenderCellParams<ExerciseWithWorkoutAndRounds>) => {
 				const rep = params.row.repetitions;
-				const dur = params.row.duration_seconds;
-				if (typeof dur === "number") {
-					return (
-						<span>
-							{dur} s <span className="text-xs text-gray-500">(temps)</span>
-						</span>
-					);
-				}
 				if (typeof rep === "number" || typeof rep === "string") {
 					return <span>{rep}</span>;
 				}
@@ -98,7 +84,7 @@ export default function ExercisesTable({ exercises }: ExercisesTableProps) {
 						href={`https://www.youtube.com/results?search_query=${encodeURIComponent(params.row.name)}`}
 						target="_blank"
 						rel="noopener noreferrer"
-						aria-label={`Rechercher ${params.row.name} sur YouTube`}
+						aria-label={`Rechercher ${params.row.name.replace(/'/g, "&apos;")} sur YouTube`}
 						className="inline-block text-red-600 hover:text-red-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					>
 						<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -109,7 +95,7 @@ export default function ExercisesTable({ exercises }: ExercisesTableProps) {
 						href={`https://www.google.com/search?q=${encodeURIComponent(params.row.name)}`}
 						target="_blank"
 						rel="noopener noreferrer"
-						aria-label={`Rechercher ${params.row.name} sur Google`}
+						aria-label={`Rechercher ${params.row.name.replace(/'/g, "&apos;")} sur Google`}
 						className="inline-block text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					>
 						<svg width="22" height="22" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
