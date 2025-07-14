@@ -15,7 +15,11 @@ export default function Home() {
 	const router = useRouter();
 
 	useEffect(() => {
-		const files: string[] = ["/sports_json/top.json", "/sports_json/bottom.json", "/sports_json/center.json"];
+		const files: string[] = [
+			"/nextjs-github-pages/sports_json/top.json",
+			"/nextjs-github-pages/sports_json/bottom.json",
+			"/nextjs-github-pages/sports_json/center.json"
+		];
 		Promise.all(
 			files.map((file) =>
 				fetch(file).then((res: Response) => {
