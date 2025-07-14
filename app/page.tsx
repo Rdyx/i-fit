@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState, useContext } from "react";
 import WorkoutDisplay from "./components/WorkoutDisplay";
-import type { WorkoutData } from "./types";
+import type { WorkoutData } from "./utils/types";
 import { DayContext } from "./layout";
 import { getFrenchDaysArray } from "./utils";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "./utils/constants";
 
 export default function Home() {
 	const [data, setData] = useState<WorkoutData[]>([]);
@@ -16,9 +17,9 @@ export default function Home() {
 
 	useEffect(() => {
 		const files: string[] = [
-			"/nextjs-github-pages/sports_json/top.json",
-			"/nextjs-github-pages/sports_json/bottom.json",
-			"/nextjs-github-pages/sports_json/center.json"
+			`${BASE_URL}/sports_json/top.json`,
+			`${BASE_URL}/sports_json/bottom.json`,
+			`${BASE_URL}/sports_json/center.json`
 		];
 		Promise.all(
 			files.map((file) =>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Stopwatch from "./Stopwatch";
 import Image from "next/image";
+import { BASE_URL } from "../utils/constants";
 
 /**
  * WorkoutStep component displays a single exercise step with details and controls.
@@ -80,7 +81,7 @@ const WorkoutStep = ({
 		>
 			{image && (
 				<Image
-					src={`/nextjs-github-pages/${image}`}
+					src={`/${BASE_URL}/${image}`}
 					alt={`Illustration de l&apos;exercice ${name}`}
 					loading="lazy"
 					aria-label={`Image de l&apos;exercice ${name}`}
