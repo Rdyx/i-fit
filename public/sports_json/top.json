@@ -2,6 +2,9 @@
 	"name": "Haut du Corps",
 	"duration_minutes": 45,
 	"frequency_per_week": 2,
+	"type": "Training",
+	"rounds": 1,
+	"when": "Lundi, Vendredi",
 	"warmup": ["Rotations d’épaules", "Cercles de bras", "Pompes lentes genoux"],
 	"exercises": [
 		{

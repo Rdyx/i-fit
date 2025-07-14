@@ -4,6 +4,8 @@
 	"frequency_per_week": 2,
 	"type": "Circuit",
 	"rounds": 3,
+	"when": "Lundi, Jeudi, Vendredi",
+	"warmup": [],
 	"exercises": [
 		{
 			"name": "Crunchs lents",

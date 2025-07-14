@@ -2,6 +2,9 @@
 	"name": "Bas du Corps",
 	"duration_minutes": 45,
 	"frequency_per_week": 2,
+	"type": "Training",
+	"rounds": 1,
+	"when": "Mercredi, Samedi",
 	"warmup": ["Squats à vide", "Fentes dynamiques", "Mobilité des hanches"],
 	"exercises": [
 		{
