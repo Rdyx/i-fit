@@ -1,4 +1,4 @@
-import type { WorkoutData } from "../types";
+import type { WorkoutData } from "../utils/types";
 import ExercisesTable from "./ExercisesTable";
 
 interface WorkoutDisplayProps {

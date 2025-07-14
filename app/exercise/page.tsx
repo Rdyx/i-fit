@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Stopwatch from "../components/Stopwatch";
 import WorkoutStep from "../components/WorkoutStep";
-import type { WorkoutData, Exercise } from "../types";
+import type { WorkoutData, Exercise } from "../utils/types";
 
 export default function ExercisePage() {
 	const [data, setData] = useState<WorkoutData[]>([]);
